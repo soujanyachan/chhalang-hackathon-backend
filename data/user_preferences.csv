@@ -1,6 +1,6 @@
 UserId,"MaxDistance for Connection (in Km)
 *Empty means any distance is fine",Latitude,Longitude
-1,,26.907524,75.739621
+1,26.907524,75.739621
 2,100,16.814524,81.526558
 3,500,21.097855,81.033707
 4,,26.907328,75.733451

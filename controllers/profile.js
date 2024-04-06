@@ -2,8 +2,7 @@ const express = require("express");
 let router = express.Router();
 const { client } = require("../db/mongo");
 
-const {updateLocation} = require("./location");
-const {findBuddies} = require("./contact");
+const { updateLocation } = require("./location");
 
 router.post("/create", async (req, res, next) => {
   console.log(req.body);
@@ -24,6 +23,5 @@ router.put("users/:userId/update/location", updateLocation);
 router.post("/create", async (req, res, next) => {
   client;
 });
-// router.put("users/:userId/update/location", getLocation);
 
 module.exports = router;

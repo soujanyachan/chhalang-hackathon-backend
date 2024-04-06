@@ -1,5 +1,5 @@
-const {userDB, getIdFromUserName} = require("../models/User");
-const {skillInterestsDB} = require("../models/SkillInterest");
+const { userDB, getIdFromUserName } = require("../models/User");
+const { skillInterestsDB } = require("../models/SkillInterest");
 //get buddy api
 
 exports.findBuddies = async (req, res) => {
@@ -7,7 +7,7 @@ exports.findBuddies = async (req, res) => {
     const { username, gameId, latitude, longitude } = req.body;
     // Find the user's buddies
     const userId = await getIdFromUserName(username);
-    const user = await userDB.find({userId});
+    const user = await userDB.find({ userId });
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -55,7 +55,7 @@ exports.findBuddies = async (req, res) => {
       { $limit: 10 },
     ];
     if (gameId) {
-      pipeline.unshift({ $match: { gameId } })
+      pipeline.unshift({ $match: { gameId } });
     }
     const potentialBuddies = await userDB.aggregate(pipeline);
 

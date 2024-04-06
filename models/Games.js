@@ -12,4 +12,6 @@ const gameSchema = new mongoose.Schema(
 
 let gameDB = dbConnection.model('games', gameSchema);
 
-module.exports = {gameDB};
+module.exports = {
+    gameDB
+};

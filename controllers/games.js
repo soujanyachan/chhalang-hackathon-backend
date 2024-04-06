@@ -4,39 +4,46 @@ const express = require('express');
 let router = express.Router();
 const {gameDB} = require("../models/Games.js");
 const _ = require('lodash');
-const {getIdFromUserName} = require("../models/User");
 const {skillInterestsDB} = require("../models/SkillInterest");
 
 router.post('/search', async (req, res) => {
     const username = _.get(req, 'body.username');
-    const userId = await getIdFromUserName(username);
+    const userId = username.toString();
     // todo: add redirect url
     const skillOrdered = await skillInterestsDB.aggregate([
-        {$match: {
-                "userId": userId
-            }},
-        { "$addFields": {
-                "convertedSkill": {"$convert":
-                        {
-                            "input": "$skillScore",
-                            "to": "decimal",
-                        } },
-                convertedInterest: { $convert:
-                        {
-                            input: "$interestLevel",
-                            to: "decimal",
-                        } }}},
         {
-            $group: {
-                _id: "$gameId",
-                avgSkillScore: { $avg: "$convertedSkill" },
-                avgInterestLevel: { $avg: "$convertedInterest" }
+            '$match': {
+                'userId': '1'
             }
-        },
-        {
-            $sort: {
-                avgSkillScore: -1,
-                avgInterestLevel: -1
+        }, {
+            '$addFields': {
+                'convertedSkill': {
+                    '$convert': {
+                        'input': '$skillScore',
+                        'to': 'decimal'
+                    }
+                },
+                'convertedInterest': {
+                    '$convert': {
+                        'input': '$interestLevel',
+                        'to': 'decimal'
+                    }
+                }
+            }
+        }, {
+            '$group': {
+                '_id': '$gameId',
+                'avgSkillScore': {
+                    '$avg': '$convertedSkill'
+                },
+                'avgInterestLevel': {
+                    '$avg': '$convertedInterest'
+                }
+            }
+        }, {
+            '$sort': {
+                'avgSkillScore': -1,
+                'avgInterestLevel': -1
             }
         }
     ]);

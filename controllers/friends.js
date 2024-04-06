@@ -1,6 +1,12 @@
 const express = require('express');
 let router = express.Router();
-const {sendFriendRequest, acceptFriendRequest, rejectFriendRequest, listFriendRequests} = require("../models/friendRequests");
+const {sendFriendRequest, listFriendRequests, deleteFriendRequest} = require("../models/friendRequests");
+
+const acceptFriendRequest = (fromUserId, toUserId) => {
+};
+
+const rejectFriendRequest = (fromUserId, toUserId) => {
+};
 
 router.put('/add', sendFriendRequest);
 router.put('/accept', acceptFriendRequest);

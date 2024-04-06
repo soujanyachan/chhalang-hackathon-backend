@@ -28,3 +28,7 @@ const getIdFromUserName = async (username) => {
 };
 
 module.exports = { userDB, getIdFromUserName };
+
+const updateFriendsForUser = async ({ fromUserId, toUserId }) => {};
+
+module.exports = { userDB, getIdFromUserName };

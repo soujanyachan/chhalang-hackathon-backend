@@ -15,16 +15,24 @@ const listFriendRequests = (userId) => {
 }
 
 const sendFriendRequest = async ({fromUserId, toUserId}) => {
-    const resp = await friendRequests.insert({
-        fromUserId,
-        toUserId
-    });
-    return resp;
+    try {
+        const resp = await friendRequests.insertOne({
+            fromUserId,
+            toUserId
+        });
+        return resp;
+    } catch (e) {
+
+    }
 }
 
 const deleteFriendRequest = async ({fromUserId, toUserId}) => {
-    const resp = await friendRequests.deleteOne({fromUserId, toUserId});
-    return resp;
+    try {
+        const resp = await friendRequests.deleteOne({fromUserId, toUserId});
+        return resp;
+    } catch (e) {
+
+    }
 }
 
 module.exports = {friendRequests, listFriendRequests, sendFriendRequest, deleteFriendRequest};

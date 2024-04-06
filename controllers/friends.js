@@ -16,7 +16,7 @@ const rejectFriendRequest = async (fromUserId, toUserId) => {
     await deleteFriendRequest({fromUserId, toUserId})
 };
 
-router.put('/add', async (req, res) => {
+router.post('/add', async (req, res) => {
     const data = await sendFriendRequest({toUserId: req.body.toUserId, fromUserId: req.body.fromUserId});
     res.send(data);
 });

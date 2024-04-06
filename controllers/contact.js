@@ -22,7 +22,7 @@ exports.findBuddies = async (req, res) => {
       // Match users with the given gameId
 
       // Exclude the current user
-      { $match: { _id: { $ne: user._id } } },
+      { $match: { userId: { $ne: user.userId } } },
 
       // Add distance calculation based on location
       {

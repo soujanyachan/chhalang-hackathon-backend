@@ -30,21 +30,15 @@ const getIdFromUserName = async (username) => {
 };
 
 const addFriendsToUser = async ({fromUserId, toUserId}) => {
-    const {MongoClient} = require('mongodb')
-    const client = await MongoClient.connect(
-        'mongodb+srv://athena:athena123!@cluster-0.nexccgk.mongodb.net/'
-    );
-    const coll = client.db('gameskraft').collection('users');
-    const cursor = coll.find({userId: toUserId});
-    const result = await cursor.toObject();
-    await client.close();
-    cursor.friends = [...result.friends || [], fromUserId]
+    const cursor = await userDB.findOne({userId: toUserId});
+    const friends = _.values(cursor.friends);
+    cursor.friends = [...friends || [], fromUserId]
     await cursor.save();
 };
 
 const deleteFriendsFromUser = async ({fromUserId, toUserId}) => {
     const user = await userDB.find({userId: toUserId});
-    const friends = _.filter(user.friends, x => x === fromUserId);
+    const friends = _.filter(_.values(user.friends), x => x === fromUserId);
     user.friends = friends;
     await user.save();
 };

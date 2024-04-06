@@ -23,7 +23,7 @@ const sendFriendRequest = async ({fromUserId, toUserId}) => {
 }
 
 const deleteFriendRequest = async ({fromUserId, toUserId}) => {
-    const resp = await friendRequests.find({fromUserId, toUserId}).remove();
+    const resp = await friendRequests.deleteOne({fromUserId, toUserId});
     return resp;
 }
 

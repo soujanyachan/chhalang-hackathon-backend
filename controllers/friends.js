@@ -5,7 +5,7 @@ const {sendFriendRequest, listFriendRequests, deleteFriendRequest} = require("..
 
 const acceptFriendRequest = async (fromUserId, toUserId) => {
     try {
-        await addFriendsToUser({userId: toUserId, friendId: fromUserId})
+        await addFriendsToUser({toUserId, fromUserId})
         await deleteFriendRequest({fromUserId, toUserId})
     } catch (e) {
         console.log(e);
@@ -24,13 +24,13 @@ router.post('/accept', async (req, res) => {
     const toUserId = req.body.username
     const fromUserId = req.body.friend_username
     const data = await acceptFriendRequest(fromUserId, toUserId);
-    res.send(data);
+    res.send({success: true});
 });
 router.post('/reject', async (req, res) => {
     const toUserId = req.body.username
     const fromUserId = req.body.friend_username
     const data = await rejectFriendRequest(fromUserId, toUserId);
-    res.send(data);
+    res.send({success: true});
 });
 
 router.post('/requests', async (req, res) => {

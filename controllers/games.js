@@ -4,8 +4,12 @@ const express = require('express');
 let router = express.Router();
 const {gameDB} = require("../models/Games.js");
 const _ = require('lodash');
+const {getUserNameFromId} = require("../models/User");
 
 router.get('/search', async (req, res) => {
+    const username = _.get(req, 'body.username');
+    const userId = await getUserNameFromId(username);
+
     const resp = await gameDB.find({}).lean();
     res.send({
         games: _.map(resp, (x) => {

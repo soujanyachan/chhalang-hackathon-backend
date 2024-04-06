@@ -1,26 +1,30 @@
 const mongoose = require("mongoose");
-const { dbConnection } = require("../db/mongo");
-const { client } = require("../db/mongo");
-const userSchema = new mongoose.Schema({
-  userId: String,
-  username: String,
-  maxConnectionRadius: Number,
-  profile: {
-    name: String,
-    location: String,
-    website: String,
-    picture: String,
-  },
-  userLocation: {
-    location: {
-      type: String,
-      coordinates: [mongoose.Schema.Types.Decimal128],
+const {dbConnection} = require('../db/mongo');
+const userSchema = new mongoose.Schema(
+    {
+        userId: String,
+        username: String,
+        maxConnectionRadius: Number,
+        friends: [String],
+        profile: {
+            name: String,
+            default_location: String,
+            phone: String,
+        },
+        userLocation: {
+            location: {
+                type: String,
+                coordinates: [mongoose.Schema.Types.Decimal128]
+            }
+        },
     },
-  },
-});
-let userDB = dbConnection.model("users", userSchema);
-const getUserDBNameFromId = (username) => {
-  userDB.find(username);
-};
+    {timestamps: true}
+);
 
-module.exports = { userDB };
+let userDB = dbConnection.model('users', userSchema);
+
+const getUserNameFromId = async (username) => {
+    return userDB.find({username});
+}
+
+module.exports = {userDB, getUserNameFromId};

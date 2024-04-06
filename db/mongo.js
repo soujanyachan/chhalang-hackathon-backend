@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const uri = config.MONGO.URI
 const options = config.MONGO.CONNECTION_OPTIONS
 
-const dbConnection = mongoose.createConnection(uri + options);
+const dbConnection = mongoose.createConnection(process.env.MONGO_URI || uri + options);
 
 module.exports = {
     dbConnection

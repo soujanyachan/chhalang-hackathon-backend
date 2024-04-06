@@ -1,9 +1,8 @@
 const express = require('express');
 let router = express.Router();
-const {getLocation} = require("./location");
-const {userDB} = require("../models/User.js");
+const {updateLocation} = require("./location");
 
-router.put('/:userId/update/location', getLocation);
+router.put('/:userId/update/location', updateLocation);
 
 router.post('/register', async (req, res) => {
     // insert into logins

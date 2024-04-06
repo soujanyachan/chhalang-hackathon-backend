@@ -1,12 +1,5 @@
 const {userDB, getIdFromUserName} = require("../models/User");
-const {dbConnection} = require("../db/mongo");
-const {skillInterestsDB} = require('../models/SkillInterest')
-const data = require("../data/skill_interest.json");
-//create profile api
-exports.CreateProfile = async (req, res) => {
-  const users = req.body;
-};
-
+const {skillInterestsDB} = require("../models/SkillInterest");
 //get buddy api
 
 exports.findBuddies = async (req, res) => {
@@ -14,16 +7,14 @@ exports.findBuddies = async (req, res) => {
     const { username, gameId, latitude, longitude } = req.body;
     // Find the user's buddies
     const userId = await getIdFromUserName(username);
-
     const user = await userDB.find({userId});
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
     // Query for potential buddies based on gameId and location
-    const potentialBuddies = await userDB.aggregate([
+    const pipeline = [
       // Match users with the given gameId
-      { $match: { gameId } },
 
       // Exclude the current user
       { $match: { _id: { $ne: user._id } } },
@@ -57,7 +48,11 @@ exports.findBuddies = async (req, res) => {
 
       // Limit the number of results if needed
       { $limit: 10 },
-    ]);
+    ];
+    if (gameId) {
+      pipeline.unshift({ $match: { gameId } })
+    }
+    const potentialBuddies = await userDB.aggregate();
 
     res.status(200).json({ buddies: potentialBuddies });
   } catch (error) {

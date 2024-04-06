@@ -1,4 +1,4 @@
-const UserDB = require("../models/User");
+const {userDB, getIdFromUserName} = require("../models/User");
 //create profile api
 exports.CreateProfile = async (req, res) => {
   const users = req.body;
@@ -8,15 +8,16 @@ exports.CreateProfile = async (req, res) => {
 
 exports.findBuddies = async (req, res) => {
   try {
-    const { userId, gameId, latitude, longitude } = req.body;
+    const { username, gameId, latitude, longitude } = req.body;
     // Find the user's buddies
-    const user = await UserDB.findById(userId);
+    const userId = await getIdFromUserName(username)
+    const user = await userDB.find({userId});
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
     // Query for potential buddies based on gameId and location
-    const potentialBuddies = await UserDB.aggregate([
+    const potentialBuddies = await userDB.aggregate([
       // Match users with the given gameId
       { $match: { gameId } },
 

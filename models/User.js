@@ -23,8 +23,8 @@ const userSchema = new mongoose.Schema(
 
 let userDB = dbConnection.model('users', userSchema);
 
-const getUserNameFromId = async (username) => {
+const getIdFromUserName = async (username) => {
     return userDB.find({username});
 }
 
-module.exports = {userDB, getUserNameFromId};
+module.exports = {userDB, getIdFromUserName};

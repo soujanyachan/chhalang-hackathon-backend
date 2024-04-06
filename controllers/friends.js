@@ -1,11 +1,11 @@
 const express = require('express');
 let router = express.Router();
-const {sendFriendRequest, acceptFriendRequest, acceptFriendRequest, listRequests} = require("../models/friendRequests");
+const {sendFriendRequest, acceptFriendRequest, rejectFriendRequest, listFriendRequests} = require("../models/friendRequests");
 
 router.put('/add', sendFriendRequest);
 router.put('/accept', acceptFriendRequest);
-router.put('/reject', acceptFriendRequest);
-router.put('/requests', listRequests);
+router.put('/reject', rejectFriendRequest);
+router.put('/requests', listFriendRequests);
 
 router.post('/register', async (req, res) => {
     // insert into logins

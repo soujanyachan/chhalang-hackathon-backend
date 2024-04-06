@@ -1,0 +1,6 @@
+{
+    "MONGO": {
+        "URI": "mongodb+srv://athena:athena123!@cluster-0.nexccgk.mongodb.net/gameskraft",
+        "CONNECTION_OPTIONS": "?retryWrites=true&w=majority&appName=cluster-0"
+    }
+}

@@ -25,6 +25,5 @@ router.post("/create", async (req, res, next) => {
   client;
 });
 // router.put("users/:userId/update/location", getLocation);
-router.get("users/:userId/buddy", findBuddies);
 
 module.exports = router;

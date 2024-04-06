@@ -17,10 +17,16 @@ const rejectFriendRequest = async (fromUserId, toUserId) => {
     await deleteFriendRequest({fromUserId, toUserId})
 };
 
-router.put('/add', sendFriendRequest);
+router.put('/add', async (req, res) => {
+    const data = await sendFriendRequest({toUserId: req.body.toUserId, fromUserId: req.body.fromUserId});
+    res.send(data);
+});
 router.put('/accept', acceptFriendRequest);
 router.put('/reject', rejectFriendRequest);
-router.put('/requests', listFriendRequests);
+router.post('/requests', async (req, res) => {
+    let data = await listFriendRequests(req.body.username);
+    res.send({requests: data});
+});
 
 router.post('/register', async (req, res) => {
     // insert into logins

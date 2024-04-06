@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const {dbConnection} = require("../db/mongo");
+const _ = require('lodash');
 const userSchema = new mongoose.Schema(
     {
         userId: String,
@@ -27,13 +28,17 @@ const getIdFromUserName = async (username) => {
     return userDB.find({username});
 };
 
-const addFriendsToUser = async () => {
-
+const addFriendsToUser = async ({fromUserId, toUserId}) => {
+    const user = await userDB.find({userId: toUserId});
+    user.friends = [...user.friends, fromUserId]
+    await user.save();
 };
 
-const deleteFriendsFromUser = async () => {
-};
-const updateFriendsForUser = async ({fromUserId, toUserId}) => {
+const deleteFriendsFromUser = async ({fromUserId, toUserId}) => {
+    const user = await userDB.find({userId: toUserId});
+    const friends = _.filter(user.friends, x => x === fromUserId);
+    user.friends = friends;
+    await user.save();
 };
 
 module.exports = {userDB, getIdFromUserName, deleteFriendsFromUser, addFriendsToUser}

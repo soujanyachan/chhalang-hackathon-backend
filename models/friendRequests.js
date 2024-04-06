@@ -11,10 +11,10 @@ const friendRequestSchema = new mongoose.Schema(
 let friendRequests = dbConnection.model('friend_requests', friendRequestSchema);
 
 const listFriendRequests = (userId) => {
-    return friendRequests.find({userId});
+    return friendRequests.find({toUserId: userId}, {fromUserId: 1});
 }
 
-const sendFriendRequest = async (fromUserId, toUserId) => {
+const sendFriendRequest = async ({fromUserId, toUserId}) => {
     const resp = await friendRequests.insert({
         fromUserId,
         toUserId

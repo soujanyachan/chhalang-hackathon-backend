@@ -1,4 +1,7 @@
 const {userDB, getIdFromUserName} = require("../models/User");
+const {dbConnection} = require("../db/mongo");
+const {skillInterestsDB} = require('../models/SkillInterest')
+const data = require("../data/skill_interest.json");
 //create profile api
 exports.CreateProfile = async (req, res) => {
   const users = req.body;
@@ -10,7 +13,8 @@ exports.findBuddies = async (req, res) => {
   try {
     const { username, gameId, latitude, longitude } = req.body;
     // Find the user's buddies
-    const userId = await getIdFromUserName(username)
+    const userId = await getIdFromUserName(username);
+
     const user = await userDB.find({userId});
     if (!user) {
       return res.status(404).json({ error: "User not found" });

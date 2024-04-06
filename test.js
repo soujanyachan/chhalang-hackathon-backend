@@ -1,4 +1,4 @@
-// const csvFilePath = './data/game_data.csv'
+// const csvFilePath = './data/skill_interest.csv'
 // const csv = require('csvtojson')
 // csv()
 //     .fromFile(csvFilePath)
@@ -11,6 +11,30 @@
 //          * ]
 //          */
 //     })
+
+
+// import mongoose from "mongoose";
+//
+// const a = {
+//     userId: String,
+//     username: String,
+//     maxConnectionRadius: Number,
+//     friends: [String],
+//     profile: {
+//         name: String,
+//         default_location: String,
+//         phone: String,
+//     },
+//     userLocation: {
+//         location: {
+//             type: String,
+//             coordinates: [mongoose.Schema.Types.Decimal128]
+//         }
+//     },
+// };
+
+)
+
 
 
 

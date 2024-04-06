@@ -27,16 +27,7 @@ dotenv.config({ path: '.env.example' });
 /**
  * Set config values
  */
-const secureTransfer = (process.env.BASE_URL.startsWith('https'));
-
-// Consider adding a proxy such as cloudflare for production.
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-
+const secureTransfer = false //(process.env.BASE_URL.startsWith('https'));
 // This logic for numberOfProxies works for local testing, ngrok use, single host deployments
 // behind cloudflare, etc. You may need to change it for more complex network settings.
 // See readme.md for more info.
@@ -54,7 +45,7 @@ const contactController = require('./controllers/contact');
 /**
  * API keys and Passport configuration.
  */
-const passportConfig = require('./config/passport');
+// const passportConfig = require('./config/passport');
 
 /**
  * Create Express server.
@@ -63,20 +54,10 @@ const app = express();
 console.log('Run this app using "npm start" to include sass/scss/css builds.\n');
 
 /**
- * Connect to MongoDB.
- */
-mongoose.connect(process.env.MONGODB_URI);
-mongoose.connection.on('error', (err) => {
-  console.error(err);
-  console.log('%s MongoDB connection error. Please make sure MongoDB is running.');
-  process.exit();
-});
-
-/**
  * Express configuration.
  */
-app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
-app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080);
+app.set('host', '0.0.0.0');
+app.set('port', 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.set('trust proxy', numberOfProxies);
@@ -84,17 +65,16 @@ app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(limiter);
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: process.env.SESSION_SECRET,
+  secret: 'test',
   name: 'startercookie', // change the cookie name for additional security in production
   cookie: {
     maxAge: 1209600000, // Two weeks in milliseconds
     secure: secureTransfer
   },
-  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI })
+  store: MongoStore.create({ mongoUrl: config.MONGO.URI })
 }));
 app.use(passport.initialize());
 app.use(passport.session());

@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const {client} = require('../db/mongo');
+
 const userSchema = new mongoose.Schema(
     {
         profile: {
@@ -17,21 +19,6 @@ const userSchema = new mongoose.Schema(
     {timestamps: true}
 );
 
+let UserDB = client.db('gameskraft').collection('users').model('User', userSchema);
 
-/**
- * Helper method for getting user's gravatar.
- */
-// userSchema.methods.gravatar = function gravatar(size) {
-//   if (!size) {
-//     size = 200;
-//   }
-//   if (!this.email) {
-//     return `https://gravatar.com/avatar/00000000000000000000000000000000?s=${size}&d=retro`;
-//   }
-//   const md5 = crypto.createHash("md5").update(this.email).digest("hex");
-//   return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`;
-// };
-
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+module.exports = UserDB;

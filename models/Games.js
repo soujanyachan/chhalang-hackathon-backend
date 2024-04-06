@@ -4,7 +4,8 @@ const gameSchema = new mongoose.Schema(
     {
         game_id: Number,
         game_name: String,
-        game_url: String
+        game_url: String,
+        game_
     },
     {timestamps: true}
 );

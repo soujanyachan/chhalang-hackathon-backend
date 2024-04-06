@@ -10,6 +10,7 @@ router.get('/search', async (req, res) => {
     const username = _.get(req, 'body.username');
     const userId = await getUserNameFromId(username);
 
+    // todo: add redirect url
     const resp = await gameDB.find({}).lean();
     res.send({
         games: _.map(resp, (x) => {

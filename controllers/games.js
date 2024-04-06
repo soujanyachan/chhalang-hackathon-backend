@@ -2,7 +2,7 @@
 
 const express = require('express');
 let router = express.Router();
-const {gameDB} = require("../models/Games.js");
+const {findGamesByIds} = require("../models/Games.js");
 const _ = require('lodash');
 const {skillInterestsDB} = require("../models/SkillInterest");
 
@@ -48,7 +48,7 @@ router.post('/search', async (req, res) => {
         }
     ]);
     const ids = skillOrdered.map((x) => x._id);
-    const resp = await gameDB.find({game_id: {$in: ids}});
+    const resp = await findGamesByIds(ids);
     res.send({
         games: _.map(resp, (x) => {
             return {...x, game_url: "http://www.snut.fr/wp-content/uploads/2015/08/image-de-paysage.jpg"};

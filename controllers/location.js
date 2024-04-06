@@ -1,10 +1,9 @@
-import User from "../models/User"
-
+const {UserDB} = require('../models/User')
 exports.getLocation = async (req, res) => {
     try {
         const {userId} = req.params;
         const {latitude, longitude} = req.body;
-        const user = await User.findById(userId);
+        const user = await UserDB.find({id: userId});
         if (!user) {
             return res.status(404).json({error: "User not found"});
         }

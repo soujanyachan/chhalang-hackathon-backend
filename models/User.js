@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
-const {client} = require('../db/mongo');
-
+const {dbConnection} = require('../db/mongo');
 const userSchema = new mongoose.Schema(
     {
+        userId: String,
+        username: String,
+        maxConnectionRadius: Number,
         profile: {
             name: String,
             location: String,
@@ -11,7 +13,7 @@ const userSchema = new mongoose.Schema(
         },
         userLocation: {
             location: {
-                type: "Point",
+                type: String,
                 coordinates: [mongoose.Schema.Types.Decimal128]
             }
         },
@@ -19,6 +21,6 @@ const userSchema = new mongoose.Schema(
     {timestamps: true}
 );
 
-let UserDB = client.db('gameskraft').collection('users').model('User', userSchema);
+let userDB = dbConnection.model('users', userSchema);
 
-module.exports = UserDB;
+module.exports = {userDB};

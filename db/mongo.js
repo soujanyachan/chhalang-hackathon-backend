@@ -1,16 +1,10 @@
 const config = require('../config/config.json')
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const mongoose = require('mongoose');
 const uri = config.MONGO.URI
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    }
-});
+const options = config.MONGO.CONNECTION_OPTIONS
+
+const dbConnection = mongoose.createConnection(uri + options);
 
 module.exports = {
-    client,
-    uri
+    dbConnection
 }

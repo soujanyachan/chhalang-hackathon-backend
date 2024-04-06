@@ -12,6 +12,8 @@ const errorHandler = require('errorhandler');
  * Controllers (route handlers).
  */
 const profile = require('./controllers/profile')
+const user = require('./controllers/user')
+const games = require('./controllers/games')
 
 /**
  * Create Express server.
@@ -41,7 +43,8 @@ app.get('/health-check', function (req, res) {
 })
 
 app.use('/profile', profile)
-
+app.use('/users', user)
+app.use('/games', games)
 
 /**
  * Error Handler.
@@ -70,30 +73,5 @@ app.listen(app.get('port'), () => {
   console.log(`App is running on http://localhost:${app.get('port')} in ${app.get('env')} mode.`);
   console.log('Press CTRL-C to stop.');
 
-app.listen(app.get("port"), () => {
-  const { BASE_URL } = process.env;
-  const colonIndex = BASE_URL.lastIndexOf(":");
-  const port = parseInt(BASE_URL.slice(colonIndex + 1), 10);
-
-  if (!BASE_URL.startsWith("http://localhost")) {
-    console.log(
-      `The BASE_URL env variable is set to ${BASE_URL}. If you directly test the application through http://localhost:${app.get(
-        "port"
-      )} instead of the BASE_URL, it may cause a CSRF mismatch or an Oauth authentication failur. To avoid the issues, change the BASE_URL or configure your proxy to match it.\n`
-    );
-  } else if (app.get("port") !== port) {
-    console.warn(
-      `WARNING: The BASE_URL environment variable and the App have a port mismatch. If you plan to view the app in your browser using the localhost address, you may need to adjust one of the ports to make them match. BASE_URL: ${BASE_URL}\n`
-    );
-  }
-
-  console.log(
-    `App is running on http://localhost:${app.get("port")} in ${app.get(
-      "env"
-    )} mode.`
-  );
-  console.log("Press CTRL-C to stop.");
-  });
 });
-
 module.exports = app;

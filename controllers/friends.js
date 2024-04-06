@@ -17,20 +17,20 @@ const rejectFriendRequest = async (fromUserId, toUserId) => {
 };
 
 router.post('/add', async (req, res) => {
-    const data = await sendFriendRequest({toUserId: req.body.toUserId, fromUserId: req.body.fromUserId});
+    const data = await sendFriendRequest({toUserId: req.body.username, fromUserId: req.body.friend_username});
     res.send(data);
 });
 router.post('/accept', async (req, res) => {
     const toUserId = req.body.username
     const fromUserId = req.body.friend_username
     const data = await acceptFriendRequest(fromUserId, toUserId);
-    res.send({success: true});
+    res.send({success: true, msg: "done"});
 });
 router.post('/reject', async (req, res) => {
     const toUserId = req.body.username
     const fromUserId = req.body.friend_username
     const data = await rejectFriendRequest(fromUserId, toUserId);
-    res.send({success: true});
+    res.send({success: true, msg: "done"});
 });
 
 router.post('/requests', async (req, res) => {

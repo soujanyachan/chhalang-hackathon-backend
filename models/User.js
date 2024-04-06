@@ -27,8 +27,12 @@ const getIdFromUserName = async (username) => {
     return userDB.find({username});
 }
 
-const updateFriendsForUser = async ({fromUserId, toUserId}) => {
+const addFriendsToUser = async () => {
+
+};
+
+const deleteFriendsFromUser = async () => {
 
 }
 
-module.exports = {userDB, getIdFromUserName};
+module.exports = {userDB, getIdFromUserName, deleteFriendsFromUser, addFriendsToUser};

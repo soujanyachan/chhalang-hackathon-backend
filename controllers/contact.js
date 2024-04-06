@@ -11,6 +11,11 @@ exports.findBuddies = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+    const users = await userDB.find({});
+    for (const user of users) {
+      user.username = user.userId;
+      user.save();
+    }
 
     // Query for potential buddies based on gameId and location
     const pipeline = [

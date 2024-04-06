@@ -1,11 +1,20 @@
 const express = require('express');
 let router = express.Router();
+const {addFriendsToUser, deleteFriendsFromUser} = require('../models/User')
 const {sendFriendRequest, listFriendRequests, deleteFriendRequest} = require("../models/friendRequests");
 
-const acceptFriendRequest = (fromUserId, toUserId) => {
+const acceptFriendRequest = async (fromUserId, toUserId) => {
+    try {
+        await addFriendsToUser({userId: toUserId, friendId: fromUserId})
+        await deleteFriendRequest({fromUserId, toUserId})
+    } catch (e) {
+        console.log(e);
+    }
 };
 
-const rejectFriendRequest = (fromUserId, toUserId) => {
+const rejectFriendRequest = async (fromUserId, toUserId) => {
+    await deleteFriendsFromUser({userId: toUserId, friendId: fromUserId})
+    await deleteFriendRequest({fromUserId, toUserId})
 };
 
 router.put('/add', sendFriendRequest);

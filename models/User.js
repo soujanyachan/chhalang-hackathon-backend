@@ -27,4 +27,8 @@ const getIdFromUserName = async (username) => {
     return userDB.find({username});
 }
 
+const updateFriendsForUser = async ({fromUserId, toUserId}) => {
+
+}
+
 module.exports = {userDB, getIdFromUserName};

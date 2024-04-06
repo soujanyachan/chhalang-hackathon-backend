@@ -14,14 +14,17 @@ const listFriendRequests = (userId) => {
     return friendRequests.find({userId});
 }
 
-const sendFriendRequest = (fromUserId, toUserId) => {
-
+const sendFriendRequest = async (fromUserId, toUserId) => {
+    const resp = await friendRequests.insert({
+        fromUserId,
+        toUserId
+    });
+    return resp;
 }
 
-const acceptFriendRequest = (fromUserId, toUserId) => {
-};
-
-const rejectFriendRequest = (fromUserId, toUserId) => {
+const deleteFriendRequest = async ({fromUserId, toUserId}) => {
+    const resp = await friendRequests.find({fromUserId, toUserId}).remove();
+    return resp;
 }
 
-module.exports = {friendRequests, listFriendRequests, sendFriendRequest, acceptFriendRequest, rejectFriendRequest};
+module.exports = {friendRequests, listFriendRequests, sendFriendRequest, deleteFriendRequest};

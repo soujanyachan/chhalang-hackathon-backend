@@ -1,5 +1,5 @@
 FROM node:18-slim
 
-CMD ["node","app.js"]
+CMD ["npm","start"]
 
 EXPOSE 3000

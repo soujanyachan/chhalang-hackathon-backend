@@ -14,6 +14,7 @@ const errorHandler = require('errorhandler');
 const profile = require('./controllers/profile')
 const user = require('./controllers/user')
 const games = require('./controllers/games')
+const friends = require('./controllers/friends')
 
 /**
  * Create Express server.
@@ -45,6 +46,7 @@ app.get('/health-check', function (req, res) {
 app.use('/profile', profile)
 app.use('/users', user)
 app.use('/games', games)
+app.use('/friends', friends)
 
 /**
  * Error Handler.

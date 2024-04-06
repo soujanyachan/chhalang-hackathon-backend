@@ -10,8 +10,18 @@ const friendRequestSchema = new mongoose.Schema(
 
 let friendRequests = dbConnection.model('friend_requests', friendRequestSchema);
 
-const findFriendRequests = (userId) => {
+const listFriendRequests = (userId) => {
     return friendRequests.find({userId});
 }
 
-module.exports = {friendRequests, findFriendRequests};
+const sendFriendRequest = (fromUserId, toUserId) => {
+
+}
+
+const acceptFriendRequest = (fromUserId, toUserId) => {
+};
+
+const rejectFriendRequest = (fromUserId, toUserId) => {
+}
+
+module.exports = {friendRequests, listFriendRequests, sendFriendRequest, acceptFriendRequest, rejectFriendRequest};

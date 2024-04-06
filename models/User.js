@@ -1,23 +1,21 @@
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
-  {
-    profile: {
-      name: String,
-      location: String,
-      website: String,
-      picture: String,
+    {
+        profile: {
+            name: String,
+            location: String,
+            website: String,
+            picture: String,
+        },
+        userLocation: {
+            location: {
+                type: "Point",
+                coordinates: [mongoose.Schema.Types.Decimal128]
+            }
+        },
     },
-    userLocation: {
-      location: {
-      type: "Point",
-      coordinates: [-73.856077, 40.848447]
-}
-    },
-  },
-  { timestamps: true }
+    {timestamps: true}
 );
-
-
 
 
 /**

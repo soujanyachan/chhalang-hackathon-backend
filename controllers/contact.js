@@ -52,7 +52,7 @@ exports.findBuddies = async (req, res) => {
     if (gameId) {
       pipeline.unshift({ $match: { gameId } })
     }
-    const potentialBuddies = await userDB.aggregate();
+    const potentialBuddies = await userDB.aggregate(pipeline);
 
     res.status(200).json({ buddies: potentialBuddies });
   } catch (error) {

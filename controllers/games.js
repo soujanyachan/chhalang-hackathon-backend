@@ -55,7 +55,7 @@ router.post('/search', async (req, res) => {
     const resp = await findGamesByIds(ids);
     res.send({
         games: _.map(resp, (x) => {
-            return {...x, game_url: "http://www.snut.fr/wp-content/uploads/2015/08/image-de-paysage.jpg", redirect_url: "https://1e97-167-220-238-235.ngrok-free.app/"};
+            return {...x, game_url: "http://www.snut.fr/wp-content/uploads/2015/08/image-de-paysage.jpg", redirect_url: "https://49d3-167-220-238-235.ngrok-free.app/"};
         })
     });
 });
